@@ -1,0 +1,10 @@
+services:
+  tflmm:
+    build: .
+    image: tflmm:tf2.8.0-mm0.4.2
+    container_name: tflmm_container
+    environment:
+      - PYTHONNOUSERSITE=1
+    volumes:
+      - ./workspace:/workspace
+    tty: true
