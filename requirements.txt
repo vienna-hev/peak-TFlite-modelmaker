@@ -27,3 +27,4 @@ scann==1.2.6
 ai-edge-litert>=1.0.1
 opencv-python-headless==4.5.5.64
 pycocotools==2.0.7
+jupyter

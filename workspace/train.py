@@ -78,6 +78,7 @@ def main():
     try:
         from tflite_model_maker import object_detector
         from tflite_model_maker import model_spec
+        from tflite_model_maker import dataset
     except ImportError as e:
         print(f"[ERROR] Failed to import tflite_model_maker: {e}")
         print("Make sure the environment has tflite_model_maker installed.")
@@ -85,10 +86,10 @@ def main():
 
     print("\n[1/4] Creating dataset from Pascal VOC annotations...")
     try:
-        dataset = object_detector.DatasetConfig.create_pascal_voc_dataset(
+        train_data = dataset.Dataset.create_from_pascal_voc(
             images_dir=args.images,
             annotations_dir=args.annotations,
-            label_map=None  # Auto-detect labels from annotations
+            label_map=None
         )
         print("[OK] Dataset created successfully")
     except Exception as e:
@@ -97,6 +98,8 @@ def main():
         print("  - Check that image filenames match XML annotation filenames")
         print("  - Ensure XML files are valid Pascal VOC format")
         print("  - Verify XML files contain <object> and <bndbox> elements")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
     print("\n[2/4] Creating model specification...")
@@ -111,7 +114,7 @@ def main():
     print("This may take several minutes depending on dataset size and hardware...")
     try:
         model = object_detector.create(
-            train_data=dataset,
+            train_data=train_data,
             model_spec=spec,
             epochs=args.epochs,
             batch_size=args.batch_size,
