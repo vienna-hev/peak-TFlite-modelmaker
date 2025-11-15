@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<annotation>
+  <folder>images</folder>
+  <filename>snap105214275057_png.rf.c6e98ea363b01527ef9251aa2ca3f4f8.jpg</filename>
+  <path>/workspace/data/images/snap105214275057_png.rf.c6e98ea363b01527ef9251aa2ca3f4f8.jpg</path>
+  <source>
+    <database>Unknown</database>
+  </source>
+  <size>
+    <width>640</width>
+    <height>480</height>
+    <depth>3</depth>
+  </size>
+  <segmented>0</segmented>
+  <object>
+    <name>Purple</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>55</xmin>
+      <ymin>139</ymin>
+      <xmax>325</xmax>
+      <ymax>401</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>Green</name>
+    <pose>Unspecified</pose>
+    <truncated>0</truncated>
+    <difficult>0</difficult>
+    <bndbox>
+      <xmin>334</xmin>
+      <ymin>83</ymin>
+      <xmax>521</xmax>
+      <ymax>272</ymax>
+    </bndbox>
+  </object>
+</annotation>
