@@ -77,22 +77,23 @@ def main():
 
     try:
         from tflite_model_maker import object_detector
-        from tflite_model_maker import model_spec
     except ImportError as e:
         print(f"[ERROR] Failed to import tflite_model_maker: {e}")
         print("Make sure the environment has tflite_model_maker installed.")
         sys.exit(1)
 
-    print("\n[1/4] Creating dataset from Pascal VOC annotations...")
+    print("\n[1/4] Loading dataset from Pascal VOC annotations...")
     try:
-        dataset = object_detector.DatasetConfig.create_pascal_voc_dataset(
-            images_dir=args.images,
-            annotations_dir=args.annotations,
-            label_map=None  # Auto-detect labels from annotations
+        train_data = object_detector.DataLoader.from_pascal_voc(
+            args.images,
+            args.annotations,
+            ['testlabel']  # Replace with your actual labels
         )
-        print("[OK] Dataset created successfully")
+        print(f"[OK] Dataset loaded: {len(train_data)} examples")
     except Exception as e:
-        print(f"[ERROR] Failed to create dataset: {e}")
+        print(f"[ERROR] Failed to load dataset: {e}")
+        import traceback
+        traceback.print_exc()
         print("\nTroubleshooting:")
         print("  - Check that image filenames match XML annotation filenames")
         print("  - Ensure XML files are valid Pascal VOC format")
@@ -101,7 +102,7 @@ def main():
 
     print("\n[2/4] Creating model specification...")
     try:
-        spec = model_spec.get('efficientdet_lite0')
+        spec = object_detector.EfficientDetLite0Spec()
         print("[OK] Using EfficientDet-Lite0 model spec")
     except Exception as e:
         print(f"[ERROR] Failed to load model spec: {e}")
@@ -111,12 +112,10 @@ def main():
     print("This may take several minutes depending on dataset size and hardware...")
     try:
         model = object_detector.create(
-            train_data=dataset,
+            train_data,
             model_spec=spec,
             epochs=args.epochs,
             batch_size=args.batch_size,
-            validation_percentage=20,
-            do_fine_tuning=True,
             train_whole_model=False
         )
         print("[OK] Training completed successfully")
