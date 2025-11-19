@@ -62,13 +62,13 @@ def main():
     parser.add_argument(
         "--epochs",
         type=int,
-        default=150,
+        default=100,
         help="Number of training epochs (default: 100)"
     )
     parser.add_argument(
         "--batch-size",
         type=int,
-        default=4,
+        default=8,
         help="Batch size for training (default: 8)"
     )
     parser.add_argument(
@@ -156,8 +156,8 @@ def main():
 
     print("\n[3/5] Creating model specification...")
     try:
-        spec = object_detector.EfficientDetLite4Spec()
-        print("[OK] Using EfficientDet-Lite4 model spec")
+        spec = object_detector.EfficientDetLite0Spec()
+        print("[OK] Using EfficientDet-Lite0 model spec")
     except Exception as e:
         print(f"[ERROR] Failed to load model spec: {e}")
         sys.exit(1)
